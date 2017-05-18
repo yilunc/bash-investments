@@ -63,16 +63,16 @@ class Portfolio():
       curr_price = float(Share(ticker).get_price())
       for num_shares, price in self.stocks[ticker]:
         value += curr_price * num_shares
-    return value
+    return round(value, 2)
 
   def get_curr_p_gain(self):
     return round(((self.get_curr_value() - self.cap_in) / self.cap_in) * 100, 2)
 
   def get_curr_c_gain(self):
-    return self.get_curr_value() - self.cap_in
+    return round(self.get_curr_value() - self.cap_in, 2)
 
   def get_cap_gain(self):
-    return self.cap_gain
+    return round(self.cap_gain, 2)
 
 if __name__ == "__main__":
   PICKLE_PATH = 'portfolio.pickle'
