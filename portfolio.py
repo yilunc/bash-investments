@@ -1,4 +1,9 @@
+#!/usr/bin/env python
+
 from yahoo_finance import Share
+import pickle
+import os
+import sys
 
 class Portfolio():
   def __init__(self):
@@ -9,21 +14,21 @@ class Portfolio():
     self.last_value = 0
 
   def __str__(self):
-    str =  "---YOUR PORTFOLIO---\n"
-    str += ("Total equity: ${0}\n").format(self.get_curr_value())
-    str += ("Capital gain: ${0}\n").format(self.get_curr_c_gain())
-    str += ("Percentage gain: {0}%\n").format(self.get_curr_p_gain())
+    s =  "---YOUR PORTFOLIO---\n"
+    s += ("Total equity: ${0}\n").format(self.get_curr_value())
+    s += ("Capital gain: ${0}\n").format(self.get_curr_c_gain())
+    s += ("Percentage gain: {0}%\n").format(self.get_curr_p_gain())
     for ticker in self.stocks:
       curr_share = Share(ticker)
       curr_price = float(curr_share.get_price())
-      str += ("    {0} at {1}: \n").format(ticker, curr_price)
+      s += ("    {0} at {1}: \n").format(ticker, curr_price)
       for num_shares, price in self.stocks[ticker]:
         basis = num_shares * price
         gain = float(curr_price * num_shares) - basis
         return_p = round((float(curr_price-price)/float(price)) * 100, 2)
-        str += ("         {0} shares | Basis: ${1} | Purch. Price: ${2} | Gain: ${3} | Return: {4}% \n") \
+        s += ("         {0} shares | Basis: ${1} | Purch. Price: ${2} | Gain: ${3} | Return: {4}% \n") \
           .format(num_shares, basis, price, gain, return_p)
-    return str
+    return s
 
   def add_shares(self, ticker, num_shares, price):
     if ticker in self.stocks:
@@ -68,7 +73,25 @@ class Portfolio():
   def get_cap_gain(self):
     return self.cap_gain
 
+if __name__ == "__main__":
+  PICKLE_PATH = 'portfolio.pickle'
 
+  if not os.path.exists(PICKLE_PATH):
+    with open(PICKLE_PATH, 'wb') as f:
+      pickle.dump(Portfolio(), f)
 
+  with open(PICKLE_PATH, 'rb') as f:
+        portfolio = pickle.load(f)
 
-
+  if len(sys.argv) == 2:
+    if sys.argv[1] == "r": # Review of your portfolio printed to console.
+      print portfolio
+  elif len(sys.argv) == 5:
+    if sys.argv[1] == "a": # Add a set of shares purchased at a price.
+      portfolio.add_shares(sys.argv[2], int(sys.argv[3]), float(sys.argv[4]))
+  else:
+    if sys.argv[1] == "s": # Sell a set of shares purchased at a price for a selling price.
+      portfolio.sell_shares(sys.argv[2], int(sys.argv[3]), float(sys.argv[4]), int(sys.argv[5]), float(sys.argv[6]))
+    
+  with open(PICKLE_PATH, 'wb') as f:
+      pickle.dump(portfolio, f)
