@@ -18,6 +18,7 @@ class Portfolio():
     s += ("Total equity: ${0}\n").format(self.get_curr_value())
     s += ("Capital gain: ${0}\n").format(self.get_curr_c_gain())
     s += ("Percentage gain: {0}%\n").format(self.get_curr_p_gain())
+    s +=  "--------------------\n"
     for ticker in self.stocks:
       curr_share = Share(ticker)
       curr_price = float(curr_share.get_price())

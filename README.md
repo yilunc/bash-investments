@@ -19,7 +19,8 @@
 ---YOUR PORTFOLIO---
 Total equity: $155306.5
 Capital gain: $13722.0
-Percentage gain: 9.69%
+Percentage gain: 9.64%
+--------------------
     GOOG at 943.0:
          100 shares | Basis: $91000.0 | Purch. Price: $910.0 | Gain: $3300.0 | Return: 3.63%
          50 shares | Basis: $42000.0 | Purch. Price: $840.0 | Gain: $5150.0 | Return: 12.26%
