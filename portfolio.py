@@ -22,7 +22,7 @@ class Portfolio():
     for ticker in self.stocks:
       curr_share = Share(ticker)
       curr_price = float(curr_share.get_price())
-      s += ("    {0} at {1}: \n").format(ticker, curr_price)
+      s += ("    {0} at ${1}: \n").format(ticker, curr_price)
       for num_shares, price in self.stocks[ticker]:
         basis = num_shares * price
         gain = float(curr_price * num_shares) - basis
