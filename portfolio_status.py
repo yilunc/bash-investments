@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from yahoo_finance import Share
 from portfolio import Portfolio
 import pickle
@@ -14,7 +16,8 @@ with open(PICKLE_PATH, 'rb') as f:
       portfolio = pickle.load(f)
 
 if len(sys.argv) == 2:
-  print(str(portfolio))
+  if sys.argv[1] == "s":
+    print(str(portfolio))
 elif len(sys.argv) == 5:
   portfolio.add_shares(sys.argv[2], int(sys.argv[3]), float(sys.argv[4]))
 else:
